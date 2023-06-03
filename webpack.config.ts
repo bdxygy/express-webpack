@@ -17,6 +17,7 @@ export default <Configuration>{
     ],
   },
   output: {
+    filename: "[name].app.js",
     path: path.resolve(__dirname, `dist/${process.env.STAGE}`),
     publicPath: "/",
     libraryTarget: "commonjs2",
@@ -40,20 +41,21 @@ export default <Configuration>{
       maxSize: 1024 * 2,
       minChunks: 1,
       enforceSizeThreshold: 1024 * 2,
+      name: "modules",
+      filename: "[name].app.js",
       cacheGroups: {
         modules: {
-          name: "mod",
           test: /[\\/]node_modules[\\/]/,
           priority: -10,
           reuseExistingChunk: true,
           enforce: true,
           chunks: "all",
-          filename: "[name].bundle.js",
         },
         default: {
           reuseExistingChunk: true,
           priority: -100,
-          filename: "app.js",
+          enforce: true,
+          chunks: "all",
         },
       },
     },
