@@ -1,5 +1,4 @@
-const fs = require("fs");
-const { execSync } = require("child_process");
+import { execSync } from "child_process";
 
 console.log("** Please wait! **");
 console.log(`** Bundling [${process.env.STAGE}] stage... **`);
