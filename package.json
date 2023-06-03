@@ -12,7 +12,8 @@
     "build:prod": "STAGE=production node builder.js"
   },
   "dependencies": {
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "mysql2": "^3.3.3"
   },
   "devDependencies": {
     "@types/dotenv": "^8.2.0",
