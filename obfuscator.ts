@@ -4,6 +4,7 @@ import { readFileSync, writeFileSync } from "fs";
 import { execSync } from "child_process";
 
 const pluginName = "ObfuscatorCode";
+const tempFileName = "ObfuscatedFile.js";
 
 export class ObfuscatorCode {
   apply(compiler: Compiler) {
@@ -18,32 +19,31 @@ export class ObfuscatorCode {
 
       for (let fileName of compilationFiles) {
         const pathFile = `${compilation.outputOptions.path}/${fileName}`;
+        const pathTempFile = `${compilation.outputOptions.path}/${tempFileName}`
         const code = readFileSync(pathFile, { encoding: "utf-8" });
 
         const obfuscationCode = javascriptObfuscator
           .obfuscate(code, {
             renameGlobals: true,
             compact: true,
-            controlFlowFlattening: true,
             target: "node",
             transformObjectKeys: true,
+            stringArray: true,
+            identifierNamesGenerator: "mangled-shuffled",
+            stringArrayEncoding: ["rc4"],
+            splitStrings: true,
+            splitStringsChunkLength: 3
           })
           .getObfuscatedCode();
 
         writeFileSync(pathFile, obfuscationCode, "utf-8");
 
         execSync(
-          `terser ${pathFile} --mangle --compress -o ${
-            compilation.outputOptions.path
-          }/${fileName.split(".")[0]}.js`
+          `terser ${pathFile} --mangle --compress --toplevel --ecma 2015 -o ${pathTempFile}`
         );
 
         execSync(
-          `rm ${compilation.outputOptions.path}/${fileName} && mv ${
-            compilation.outputOptions.path
-          }/${fileName.split(".")[0]}.js ${
-            compilation.outputOptions.path
-          }/${fileName}`
+          `rm ${pathFile} && mv ${pathTempFile} ${pathFile}`
         );
       }
     });

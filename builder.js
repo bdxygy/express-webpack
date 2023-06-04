@@ -2,6 +2,7 @@ const { execSync } = require("child_process");
 const { readFileSync, writeFileSync } = require("fs");
 const path = require("path");
 
+
 const colors = {
   reset: "\x1b[0m",
   bright: "\x1b[1m",
