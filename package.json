@@ -7,10 +7,9 @@
   "scripts": {
     "tsc": "tsc",
     "watch:build": "STAGE=development webpack --watch",
-    "watch:serve": "STAGE=development nodemon ./dist/development/app.js",
-    "build:dev": "STAGE=development SUFFLE=false node builder.js",
-    "build:prod": "STAGE=production SUFFLE=false node builder.js",
-    "build:prod:suffle": "STAGE=production SUFFLE=true node builder.js"
+    "watch:serve": "STAGE=development nodemon ./dist/development/main.app.js",
+    "build:dev": "STAGE=development node builder.js",
+    "build:prod": "STAGE=production node builder.js"
   },
   "dependencies": {
     "express": "^4.18.2"
