@@ -2,7 +2,7 @@ import path from "path";
 import { Configuration } from "webpack";
 import TerserPlugin from "terser-webpack-plugin";
 import TsConfigPathPlugin from "tsconfig-paths-webpack-plugin";
-import { ObfuscatorCode } from "./obfuscator";
+import ObfuscatorPlugin from "@bdxygy/webpack-javascript-obfuscator-plugin";
 
 export default <Configuration>{
   entry: "./src/main.ts",
@@ -74,7 +74,7 @@ export default <Configuration>{
   stats: {
     errorDetails: true,
   },
-  plugins: [new ObfuscatorCode()],
+  plugins: [new ObfuscatorPlugin()],
   externals:
     process.env.STAGE === "development"
       ? undefined
