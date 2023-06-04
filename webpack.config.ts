@@ -2,6 +2,7 @@ import path from "path";
 import { Configuration } from "webpack";
 import TerserPlugin from "terser-webpack-plugin";
 import TsConfigPathPlugin from "tsconfig-paths-webpack-plugin";
+import { ObfuscatorCode } from "./obfuscator";
 
 export default <Configuration>{
   entry: "./src/main.ts",
@@ -41,7 +42,7 @@ export default <Configuration>{
       maxSize: 1024 * 2,
       minChunks: 1,
       enforceSizeThreshold: 1024 * 2,
-      name: "modules",
+      name: "m",
       filename: "[name].app.js",
       cacheGroups: {
         modules: {
@@ -73,4 +74,11 @@ export default <Configuration>{
   stats: {
     errorDetails: true,
   },
+  plugins: [new ObfuscatorCode()],
+  externals:
+    process.env.STAGE === "development"
+      ? undefined
+      : {
+          express: ["express"],
+        },
 };

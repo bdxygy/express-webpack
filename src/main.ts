@@ -18,6 +18,6 @@ app.use((req, res) => {
 
 app.listen(5000, () => {
   console.log(
-    `Your server is Running in ${process.env.STAGING} Mode! Please Aware Again`
+    `Your server is Running in ${process.env.STAGING} Mode!`
   );
 });
